@@ -1,0 +1,12 @@
+queue_rules:
+  - name: default
+    queue_conditions:
+      - label = queue
+      - check-success = ci
+    merge_conditions:
+      - check-success = ci
+    merge_method: squash
+    batch_size: 2
+    batch_max_wait_time: 30 s
+merge_queue:
+  max_parallel_checks: 2
