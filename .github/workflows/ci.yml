@@ -14,3 +14,8 @@ jobs:
           node-version: 24
       - run: sleep 45
       - run: node --test
+  pr-only:
+    if: ${{ !(github.event.pull_request.draft && github.event.pull_request.user.login == 'mergify[bot]' && startsWith(github.head_ref, 'mergify/merge-queue/')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo pr-only
