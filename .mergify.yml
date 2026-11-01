@@ -6,6 +6,8 @@ queue_rules:
     merge_conditions:
       - check-success = ci
     merge_method: squash
+    branch_protection_injection_mode: none
+    merge_bot_account: xiechimon
     batch_size: 2
 merge_protections_settings:
   auto_merge_conditions: true
