@@ -3,12 +3,12 @@ queue_rules:
     queue_conditions:
       - label = queue
       - check-success = ci
-      - -files ~= "(?i)^(?:\\.github(?:\\/.*)?|(?:.*\\/)?\\.husky(?:\\/.*)?|(?:.*\\/)?\\.claude(?:\\/.*)?|(?:.*\\/)?\\.pi(?:\\/.*)?|(?:.*\\/)?\\.cursor(?:\\/.*)?|(?:.*\\/)?\\.mcp\\.json|(?:.*\\/)?\\.ckignore|(?:.*\\/)?CLAUDE[^/]*\\.md|(?:.*\\/)?AGENTS[^/]*\\.md|docs\\/pr-review\\.md|docs\\/lessons\\.md|docs\\/lessons(?:\\/.*)?|docs\\/agent-dispatch-prompts\\.md|docs\\/adr(?:\\/.*)?|docs\\/spec(?:\\/.*)?|(?:.*\\/)?scripts(?:\\/.*)?|(?:.*\\/)?[^/]*\\.config\\.[^/]*|(?:.*\\/)?biome\\.json|(?:.*\\/)?biome\\.jsonc|(?:.*\\/)?tsconfig[^/]*\\.json|(?:.*\\/)?\\.gitignore|(?:.*\\/)?\\.gitattributes|(?:.*\\/)?drizzle(?:\\/.*)?|(?:.*\\/)?package\\.json|pnpm-lock\\.yaml|pnpm-workspace\\.yaml|(?:.*\\/)?\\.npmrc|apps\\/server\\/src\\/lib\\/secret-box\\.ts|apps\\/server\\/src\\/lib\\/keys\\.ts|apps\\/server\\/src\\/lib\\/token-auth\\.ts|apps\\/server\\/src\\/lib\\/attachments-token\\.ts|apps\\/server\\/src\\/services\\/secrets\\.ts|apps\\/server\\/src\\/services\\/credentials\\.ts|apps\\/server\\/src\\/services\\/api-keys\\.ts|apps\\/server\\/src\\/services\\/oauth\\.ts|apps\\/server\\/src\\/routes-machine\\.ts|apps\\/server\\/src\\/services\\/machine[^/]*\\.ts|apps\\/daemon\\/src\\/credentials\\.ts|apps\\/daemon\\/src\\/secret-channel\\.ts|apps\\/daemon\\/src\\/machine-client\\.ts|apps\\/daemon\\/src\\/backend\\/command-gate\\.ts|apps\\/server\\/src\\/services\\/mcp-face\\.ts|apps\\/server\\/src\\/services\\/mcp-servers\\.ts|apps\\/server\\/src\\/db\\/client\\.ts|apps\\/server\\/src\\/services\\/harness-eval-[^/]*\\.ts|integration\\/eval(?:\\/.*)?|\\.claude\\/hillclimb(?:\\/.*)?|apps\\/server\\/src\\/trajectory-export\\.ts|apps\\/server\\/src\\/trajectory-export-cli\\.ts|apps\\/server\\/src\\/trajectory-outcome\\.ts|packages\\/shared\\/src\\/trajectory-pack\\.ts|apps\\/server\\/src\\/services\\/merge-gate(?:\\/.*)?|packages\\/shared\\/src\\/records\\/merge-gate\\.ts|apps\\/daemon\\/src\\/merge-decision\\.ts)$"
-      - -files ~= "(?ai)^(?!(?:apps\\/[^/]*\\/src\\/.*|apps\\/[^/]*\\/test\\/.*|apps\\/[^/]*\\/e2e\\/.*|packages\\/[^/]*\\/src\\/.*|packages\\/[^/]*\\/test\\/.*|integration\\/test\\/.*|docs\\/verify\\/.*|docs\\/(?:.*\\/)?[^/]*\\.md)$)"
-      - -removed-files ~= "(?i)(^|/)(e2e|test|tests|__tests__)/|\\.(test|spec)\\.[cm]?[jt]sx?$"
-      - "#files <= 40"
-      - "#added-lines <= 400"
-      - "#deleted-lines <= 400"
+      - '-files ~= (?i)^(?:\.github(?:\/.*)?|(?:.*\/)?\.husky(?:\/.*)?|(?:.*\/)?\.claude(?:\/.*)?|(?:.*\/)?\.pi(?:\/.*)?|(?:.*\/)?\.cursor(?:\/.*)?|(?:.*\/)?\.mcp\.json|(?:.*\/)?\.ckignore|(?:.*\/)?CLAUDE[^/]*\.md|(?:.*\/)?AGENTS[^/]*\.md|docs\/pr-review\.md|docs\/lessons\.md|docs\/lessons(?:\/.*)?|docs\/agent-dispatch-prompts\.md|docs\/adr(?:\/.*)?|docs\/spec(?:\/.*)?|(?:.*\/)?scripts(?:\/.*)?|(?:.*\/)?[^/]*\.config\.[^/]*|(?:.*\/)?biome\.json|(?:.*\/)?biome\.jsonc|(?:.*\/)?tsconfig[^/]*\.json|(?:.*\/)?\.gitignore|(?:.*\/)?\.gitattributes|(?:.*\/)?drizzle(?:\/.*)?|(?:.*\/)?package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|(?:.*\/)?\.npmrc|apps\/server\/src\/lib\/secret-box\.ts|apps\/server\/src\/lib\/keys\.ts|apps\/server\/src\/lib\/token-auth\.ts|apps\/server\/src\/lib\/attachments-token\.ts|apps\/server\/src\/services\/secrets\.ts|apps\/server\/src\/services\/credentials\.ts|apps\/server\/src\/services\/api-keys\.ts|apps\/server\/src\/services\/oauth\.ts|apps\/server\/src\/routes-machine\.ts|apps\/server\/src\/services\/machine[^/]*\.ts|apps\/daemon\/src\/credentials\.ts|apps\/daemon\/src\/secret-channel\.ts|apps\/daemon\/src\/machine-client\.ts|apps\/daemon\/src\/backend\/command-gate\.ts|apps\/server\/src\/services\/mcp-face\.ts|apps\/server\/src\/services\/mcp-servers\.ts|apps\/server\/src\/db\/client\.ts|apps\/server\/src\/services\/harness-eval-[^/]*\.ts|integration\/eval(?:\/.*)?|\.claude\/hillclimb(?:\/.*)?|apps\/server\/src\/trajectory-export\.ts|apps\/server\/src\/trajectory-export-cli\.ts|apps\/server\/src\/trajectory-outcome\.ts|packages\/shared\/src\/trajectory-pack\.ts|apps\/server\/src\/services\/merge-gate(?:\/.*)?|packages\/shared\/src\/records\/merge-gate\.ts|apps\/daemon\/src\/merge-decision\.ts)$'
+      - '-files ~= (?ai)^(?!(?:apps\/[^/]*\/src\/.*|apps\/[^/]*\/test\/.*|apps\/[^/]*\/e2e\/.*|packages\/[^/]*\/src\/.*|packages\/[^/]*\/test\/.*|integration\/test\/.*|docs\/verify\/.*|docs\/(?:.*\/)?[^/]*\.md)$)'
+      - '-removed-files ~= (?i)(^|/)(e2e|test|tests|__tests__)/|[.](test|spec)[.][cm]?[jt]sx?$'
+      - '#files <= 40'
+      - '#added-lines <= 400'
+      - '#deleted-lines <= 400'
     merge_conditions:
       - check-success = ci
     merge_method: squash
@@ -16,40 +16,22 @@ queue_rules:
 pull_request_rules:
   - name: probe p1-plain
     conditions:
-      - files ~= "^scripts/"
+      - 'files ~= ^scripts/'
     actions:
       label:
         add: [p1-plain]
-  - name: probe p2-inline-i
-    conditions:
-      - files ~= "(?i)^scripts/"
-    actions:
-      label:
-        add: [p2-inline-i]
-  - name: probe p3-escaped-slash
-    conditions:
-      - files ~= "^(?:.*\\/)?scripts(?:\\/.*)?$"
-    actions:
-      label:
-        add: [p3-escaped-slash]
   - name: probe p4-protected-full
     conditions:
-      - files ~= "(?i)^(?:\\.github(?:\\/.*)?|(?:.*\\/)?\\.husky(?:\\/.*)?|(?:.*\\/)?\\.claude(?:\\/.*)?|(?:.*\\/)?\\.pi(?:\\/.*)?|(?:.*\\/)?\\.cursor(?:\\/.*)?|(?:.*\\/)?\\.mcp\\.json|(?:.*\\/)?\\.ckignore|(?:.*\\/)?CLAUDE[^/]*\\.md|(?:.*\\/)?AGENTS[^/]*\\.md|docs\\/pr-review\\.md|docs\\/lessons\\.md|docs\\/lessons(?:\\/.*)?|docs\\/agent-dispatch-prompts\\.md|docs\\/adr(?:\\/.*)?|docs\\/spec(?:\\/.*)?|(?:.*\\/)?scripts(?:\\/.*)?|(?:.*\\/)?[^/]*\\.config\\.[^/]*|(?:.*\\/)?biome\\.json|(?:.*\\/)?biome\\.jsonc|(?:.*\\/)?tsconfig[^/]*\\.json|(?:.*\\/)?\\.gitignore|(?:.*\\/)?\\.gitattributes|(?:.*\\/)?drizzle(?:\\/.*)?|(?:.*\\/)?package\\.json|pnpm-lock\\.yaml|pnpm-workspace\\.yaml|(?:.*\\/)?\\.npmrc|apps\\/server\\/src\\/lib\\/secret-box\\.ts|apps\\/server\\/src\\/lib\\/keys\\.ts|apps\\/server\\/src\\/lib\\/token-auth\\.ts|apps\\/server\\/src\\/lib\\/attachments-token\\.ts|apps\\/server\\/src\\/services\\/secrets\\.ts|apps\\/server\\/src\\/services\\/credentials\\.ts|apps\\/server\\/src\\/services\\/api-keys\\.ts|apps\\/server\\/src\\/services\\/oauth\\.ts|apps\\/server\\/src\\/routes-machine\\.ts|apps\\/server\\/src\\/services\\/machine[^/]*\\.ts|apps\\/daemon\\/src\\/credentials\\.ts|apps\\/daemon\\/src\\/secret-channel\\.ts|apps\\/daemon\\/src\\/machine-client\\.ts|apps\\/daemon\\/src\\/backend\\/command-gate\\.ts|apps\\/server\\/src\\/services\\/mcp-face\\.ts|apps\\/server\\/src\\/services\\/mcp-servers\\.ts|apps\\/server\\/src\\/db\\/client\\.ts|apps\\/server\\/src\\/services\\/harness-eval-[^/]*\\.ts|integration\\/eval(?:\\/.*)?|\\.claude\\/hillclimb(?:\\/.*)?|apps\\/server\\/src\\/trajectory-export\\.ts|apps\\/server\\/src\\/trajectory-export-cli\\.ts|apps\\/server\\/src\\/trajectory-outcome\\.ts|packages\\/shared\\/src\\/trajectory-pack\\.ts|apps\\/server\\/src\\/services\\/merge-gate(?:\\/.*)?|packages\\/shared\\/src\\/records\\/merge-gate\\.ts|apps\\/daemon\\/src\\/merge-decision\\.ts)$"
+      - 'files ~= (?i)^(?:\.github(?:\/.*)?|(?:.*\/)?\.husky(?:\/.*)?|(?:.*\/)?\.claude(?:\/.*)?|(?:.*\/)?\.pi(?:\/.*)?|(?:.*\/)?\.cursor(?:\/.*)?|(?:.*\/)?\.mcp\.json|(?:.*\/)?\.ckignore|(?:.*\/)?CLAUDE[^/]*\.md|(?:.*\/)?AGENTS[^/]*\.md|docs\/pr-review\.md|docs\/lessons\.md|docs\/lessons(?:\/.*)?|docs\/agent-dispatch-prompts\.md|docs\/adr(?:\/.*)?|docs\/spec(?:\/.*)?|(?:.*\/)?scripts(?:\/.*)?|(?:.*\/)?[^/]*\.config\.[^/]*|(?:.*\/)?biome\.json|(?:.*\/)?biome\.jsonc|(?:.*\/)?tsconfig[^/]*\.json|(?:.*\/)?\.gitignore|(?:.*\/)?\.gitattributes|(?:.*\/)?drizzle(?:\/.*)?|(?:.*\/)?package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|(?:.*\/)?\.npmrc|apps\/server\/src\/lib\/secret-box\.ts|apps\/server\/src\/lib\/keys\.ts|apps\/server\/src\/lib\/token-auth\.ts|apps\/server\/src\/lib\/attachments-token\.ts|apps\/server\/src\/services\/secrets\.ts|apps\/server\/src\/services\/credentials\.ts|apps\/server\/src\/services\/api-keys\.ts|apps\/server\/src\/services\/oauth\.ts|apps\/server\/src\/routes-machine\.ts|apps\/server\/src\/services\/machine[^/]*\.ts|apps\/daemon\/src\/credentials\.ts|apps\/daemon\/src\/secret-channel\.ts|apps\/daemon\/src\/machine-client\.ts|apps\/daemon\/src\/backend\/command-gate\.ts|apps\/server\/src\/services\/mcp-face\.ts|apps\/server\/src\/services\/mcp-servers\.ts|apps\/server\/src\/db\/client\.ts|apps\/server\/src\/services\/harness-eval-[^/]*\.ts|integration\/eval(?:\/.*)?|\.claude\/hillclimb(?:\/.*)?|apps\/server\/src\/trajectory-export\.ts|apps\/server\/src\/trajectory-export-cli\.ts|apps\/server\/src\/trajectory-outcome\.ts|packages\/shared\/src\/trajectory-pack\.ts|apps\/server\/src\/services\/merge-gate(?:\/.*)?|packages\/shared\/src\/records\/merge-gate\.ts|apps\/daemon\/src\/merge-decision\.ts)$'
     actions:
       label:
         add: [p4-protected-full]
   - name: probe p5-outside-full
     conditions:
-      - files ~= "(?ai)^(?!(?:apps\\/[^/]*\\/src\\/.*|apps\\/[^/]*\\/test\\/.*|apps\\/[^/]*\\/e2e\\/.*|packages\\/[^/]*\\/src\\/.*|packages\\/[^/]*\\/test\\/.*|integration\\/test\\/.*|docs\\/verify\\/.*|docs\\/(?:.*\\/)?[^/]*\\.md)$)"
+      - 'files ~= (?ai)^(?!(?:apps\/[^/]*\/src\/.*|apps\/[^/]*\/test\/.*|apps\/[^/]*\/e2e\/.*|packages\/[^/]*\/src\/.*|packages\/[^/]*\/test\/.*|integration\/test\/.*|docs\/verify\/.*|docs\/(?:.*\/)?[^/]*\.md)$)'
     actions:
       label:
         add: [p5-outside-full]
-  - name: probe p6-ai-flag
-    conditions:
-      - files ~= "(?ai)^scripts/"
-    actions:
-      label:
-        add: [p6-ai-flag]
   - name: enter the queue on label
     conditions:
       - label = queue
