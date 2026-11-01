@@ -15,4 +15,4 @@ merge_protections:
       - base = main
       - '-files ~= ^protected/'
     success_conditions:
-      - queue-position >= 0
+      - check-success = ci
