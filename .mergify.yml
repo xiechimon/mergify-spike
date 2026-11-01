@@ -3,10 +3,19 @@ queue_rules:
     queue_conditions:
       - label = queue
       - check-success = ci
+      - status-success = review-gate
     merge_conditions:
       - check-success = ci
     merge_method: squash
+    merge_bot_account: xiechimon
     batch_size: 2
     batch_max_wait_time: 30 s
 merge_queue:
   max_parallel_checks: 2
+pull_request_rules:
+  - name: enter the queue on label
+    conditions:
+      - label = queue
+    actions:
+      queue:
+        name: default
