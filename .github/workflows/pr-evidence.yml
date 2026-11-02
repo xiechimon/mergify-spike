@@ -1,0 +1,28 @@
+name: pr-evidence
+on:
+  pull_request:
+    types: [opened, synchronize, labeled, unlabeled, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  pr-evidence:
+    if: ${{ !(github.event.pull_request.draft && github.event.pull_request.user.login == 'mergify[bot]' && startsWith(github.head_ref, 'mergify/merge-queue/')) }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Read the PR labels as they are now
+        id: pr
+        run: echo "labels=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.labels[].name] | join(",")')" >> "$GITHUB_OUTPUT"
+      - name: Refuse while coordinator-hold is on
+        env:
+          LABELS: ${{ steps.pr.outputs.labels }}
+        run: |
+          case ",$LABELS," in
+            *,coordinator-hold,*)
+              echo "FAIL coordinator-hold"
+              exit 1 ;;
+          esac
+          echo "pr-decision: GREEN"
