@@ -1,0 +1,17 @@
+name: codex-retry
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        required: true
+permissions:
+  pull-requests: write
+  issues: write
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ inputs.pr }}
+        run: gh pr comment "$PR" -R "$GITHUB_REPOSITORY" --body "@codex review"
