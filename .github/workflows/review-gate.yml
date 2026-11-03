@@ -1,0 +1,15 @@
+name: review-gate
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, edited]
+permissions:
+  contents: read
+jobs:
+  review-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: verdict
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          case "$TITLE" in *"[fail]"*) echo "BLOCK"; exit 1;; *) echo "PASS";; esac

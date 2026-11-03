@@ -3,7 +3,7 @@ queue_rules:
     queue_conditions:
       - check-success = ci
       - check-success = pr-only
-      - status-success = review-gate
+      - check-success = @github-actions/review-gate
       - '-files ~= ^protected/'
     merge_conditions:
       - check-success = ci
