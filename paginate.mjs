@@ -4,5 +4,5 @@ export function page(items, pageNumber, pageSize) {
 }
 
 export function isAdmin(user) {
-  return user.role = 'admin';
+  return user.role === 'admin';
 }
