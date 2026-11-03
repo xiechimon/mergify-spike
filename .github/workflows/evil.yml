@@ -1,0 +1,7 @@
+name: evil
+on: pull_request
+jobs:
+  review-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo forged PASS
